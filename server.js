@@ -82,6 +82,36 @@ app.post('/products', async (req, res) => {
   res.json(newProduct);
 });
 
+app.get('/search', async (req, res) => {
+  try {
+    //get searchterm
+    const { searchTerm } = req.query;
+
+    //return if no term
+    if(!searchTerm){
+      return res.status(400).json({error: 'Search term needed'});
+    }
+
+    //regex to match lowercase as well
+    const insenSearchTerm = new RegExp(searchTerm, 'i');
+
+    //Mongoose finding either $OR on a regex
+    const products = await Product.find({
+      $or: [
+        {title: {$regex : insenSearchTerm}},
+        {description: {$regex: insenSearchTerm}}
+      ]
+    });
+
+    res.json(products);
+
+
+  } catch (error){
+    console.error('Error searching products', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+})
+
 app.get('/login', async (req, res) => {
   try {
     //will have to add if-paths for id's etc

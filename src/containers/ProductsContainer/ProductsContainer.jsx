@@ -1,12 +1,14 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState, useContext, startTransition, useRef } from 'react';
 import axios from 'axios';
 import { StoreContext } from '../../contexts/ContextProvider';
 import ProductsComponent from '../../components/ProductsComponent/ProductsComponent';
+import SearchContainer from '../SearchContainer/SearchContainer';
 
 const ProductsContainer = () => {
     console.log('Rendering Products component');
     //const [products, setProducts] = useState([]);
-    const { products, setProducts } = useContext(StoreContext);
+    const { products, setProducts, searchedValue } = useContext(StoreContext);
+    const firstMount = useRef(true);
   
     useEffect(() => {
       // Fetch products from the Express server
@@ -18,12 +20,30 @@ const ProductsContainer = () => {
         console.error('Error fetching products:', error);
       });
     }, []);
+
+    useEffect(() => {
+        
+        if(firstMount.current){
+           firstMount.current = false;
+           return;
+        }
+        
+        //make a filtered search
+        alert("trying search for " + searchedValue);
+        axios.get(`http://localhost:5000/search?searchTerm=${searchedValue}`)
+        .then((res) => setProducts(res.data))
+        .catch((error) => {
+            console.error('Error fetching products:', error);
+        })
+
+        
+    }, [searchedValue])
   
 
     //context in container, rest is just showed down
     return (
       <div>
-        <input placeholder='SEARCHBAR'></input>
+        <SearchContainer></SearchContainer>
         <ProductsComponent data={products}></ProductsComponent>
       </div>
     );
