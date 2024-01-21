@@ -9,10 +9,13 @@ const ContextProvider = (props) => {
 
     const [userEmail, setUserEmail] = useState("");
     const [userPass, setUserPass] = useState("");
+
+    const [products, setProducts] = useState([]);
     
 
     return (
-        <StoreContext.Provider value = {{loggedCustomer, updateLoggedIn, userEmail, setUserEmail, userPass, setUserPass}}>
+        <StoreContext.Provider value = {{loggedCustomer, updateLoggedIn, userEmail, setUserEmail, 
+        userPass, setUserPass, products, setProducts}}>
             {props.children}
         </StoreContext.Provider>
     );

@@ -1,17 +1,17 @@
 // client/src/App.js
 import React from 'react';
-import Products from './components/Products';
 import Orders from './components/Orders';
 import { ContextProvider } from './contexts/ContextProvider';
 import CustomerContainer from './containers/CustomerContainer/CustomerContainer';
+import ProductsContainer from './containers/ProductsContainer/ProductsContainer';
 
 function App() {
   return (
     <div>
       <ContextProvider>
-        <h1>MERN Stack App</h1>
+        <h1>TopStyle</h1>
         <CustomerContainer></CustomerContainer>
-        <Products />
+        <ProductsContainer />
         <Orders />
       </ContextProvider>
     </div>
