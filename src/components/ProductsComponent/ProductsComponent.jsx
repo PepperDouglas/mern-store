@@ -6,8 +6,8 @@ const ProductsComponent = ({data}) => {
     console.log(data)
     return(
         <>
-            {data.map((product) => {
-                return <CardContainer key={product.id} prop={product}></CardContainer>
+            {data.map((product, i) => {
+                return <CardContainer key={i} prop={product}></CardContainer>
             })}
         </>
     );

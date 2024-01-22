@@ -1,0 +1,14 @@
+.product-details {
+    border: 2px solid black;
+    height: 60vh;
+    width: 24vw;
+}
+
+img {
+    height: 50%;
+    width: 100%;
+}
+
+p {
+    text-transform: capitalize;
+}

@@ -1,14 +1,18 @@
+import { useContext } from "react";
+import { StoreContext } from "../../contexts/ContextProvider";
 import CardComponent from "../../components/CardComponent/CardComponent";
 
 
 
-const CardContainer = ({prop}) => {
+const CardContainer = ({prop, key}) => {
 
     //Card logic
-    console.log("hello" + prop);
+    const { setSelectedProduct } = useContext(StoreContext);
+
+    console.log("hello" + prop.title);
     return(
         
-        <CardComponent props={prop}></CardComponent>
+        <CardComponent id={key} props={prop} setSelected={setSelectedProduct}></CardComponent>
         
     );
 }
