@@ -24,9 +24,9 @@ connection.once('open', () => {
   console.log('MongoDB database connection established successfully');
 });
 
-// Product model
+// Product model _ID MIGHT BE A STRING OR OBJ
 const ProductSchema = new mongoose.Schema({
-  id: Number,
+  _id: Number,
   title: String,
   description: String,
   price: Number,

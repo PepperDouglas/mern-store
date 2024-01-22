@@ -3,11 +3,12 @@ import axios from 'axios';
 import { StoreContext } from '../../contexts/ContextProvider';
 import ProductsComponent from '../../components/ProductsComponent/ProductsComponent';
 import SearchContainer from '../SearchContainer/SearchContainer';
+import DetailViewContainer from '../DetailView/DetailViewContainer';
 
 const ProductsContainer = () => {
     console.log('Rendering Products component');
     //const [products, setProducts] = useState([]);
-    const { products, setProducts, searchedValue } = useContext(StoreContext);
+    const { products, setProducts, searchedValue, selectedProduct } = useContext(StoreContext);
     const firstMount = useRef(true);
   
     useEffect(() => {
@@ -42,10 +43,15 @@ const ProductsContainer = () => {
 
     //context in container, rest is just showed down
     return (
-      <div>
-        <SearchContainer></SearchContainer>
-        <ProductsComponent data={products}></ProductsComponent>
-      </div>
+        <>
+            <div>
+                <SearchContainer></SearchContainer>
+                <ProductsComponent data={products}></ProductsComponent>
+            </div>
+            <div>
+                <DetailViewContainer></DetailViewContainer>
+            </div>
+        </>
     );
   };
   
