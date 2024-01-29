@@ -6,7 +6,7 @@ import LoginComponent from "../../components/LoginComponent/LoginComponent";
 
 const LoginContainer = () => {
 
-    const { userEmail, userPass, setUserEmail, setUserPass } = useContext(StoreContext)
+    const { userEmail, userPass, setUserEmail, setUserPass, updateLoggedIn } = useContext(StoreContext)
 
 
     const handleLoginClick = () => {
@@ -16,8 +16,8 @@ const LoginContainer = () => {
         .then((response) => {
         console.log('Received customer response:', response.data);
         if(userPass === response.data.password){
-            sessionStorage.setItem("loggedUser", response.data.id);
-            console.log("hi");
+            sessionStorage.setItem("loggedUser", response.data._id);
+            //updateLoggedIn(response.data._id);
         }
         })
         .catch((error) => {

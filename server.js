@@ -26,7 +26,7 @@ connection.once('open', () => {
 
 // Product model _ID MIGHT BE A STRING OR OBJ
 const ProductSchema = new mongoose.Schema({
-  _id: Number,
+  id: Number, //made a change here from _id
   title: String,
   description: String,
   price: Number,
@@ -152,6 +152,52 @@ app.get('/doescustomerexist', async (req, res) => {
   } catch (error) {
     console.log("Error: ", error);
   }
+
+})
+
+app.patch('/updatecart', async (req, res) => {
+  try {
+    const { customer } = req.query;
+    const { newOrder } = req.body;
+
+    console.log("in server " + customer);
+
+    const updatedCustomer = await Customer.findByIdAndUpdate(
+      customer,
+      { $push: { orders: newOrder } },
+      { new: true }
+
+    );
+    
+    if (!updatedCustomer) {
+      return res.status(404).send('Customer not found');
+    }
+
+    res.json(updatedCustomer);
+  } catch (error) {
+    console.error('Error adding order to customer:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.patch('/updatestock', async (req, res) => {
+  console.log("server enter stock");
+
+  try {
+    const { newstock } = req.body;
+    for (const {id, amount} of newstock) {
+      await Product.findOneAndUpdate(
+        { id: id }, 
+        { $inc: { stock: -amount } }
+      );
+    }
+
+    res.json({ message: 'Stock updated' });
+  } catch (error){
+
+    console.error('Error updating product stocks', error);
+  }
+
 
 })
 

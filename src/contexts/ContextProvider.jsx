@@ -5,7 +5,7 @@ const StoreContext = createContext();
 const ContextProvider = (props) => {
     
     const updateLoggedIn = (val) =>{ setLoggedCustomer(val); }
-    const[loggedCustomer, setLoggedCustomer] = useState(0);
+    const[loggedCustomer, setLoggedCustomer] = useState('');
 
     const [userEmail, setUserEmail] = useState("");
     const [userPass, setUserPass] = useState("");
