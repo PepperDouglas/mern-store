@@ -3,11 +3,10 @@
 const CustomerComponent = (props) => {
 
     return(
-        <>
-            {props.testdata}
-            <input value={props.mail} onChange={props.changeMFn}></input>
-            <input value={props.pass} onChange={props.changePFn}></input>
-        </>
+        <div className="customer-component">
+            <input placeholder="Email" type="text" value={props.mail} onChange={props.changeMFn}></input>
+            <input placeholder="Password" type="password" value={props.pass} onChange={props.changePFn}></input>
+        </div>
     );
 
 }

@@ -14,12 +14,14 @@ const ContextProvider = (props) => {
     const [searchedValue, setSearchedValue] = useState("");
 
     const [selectedProduct, setSelectedProduct] = useState([]);
+
+    const [cartOpen, setCartOpen] = useState(true);
     
 
     return (
         <StoreContext.Provider value = {{loggedCustomer, updateLoggedIn, userEmail, setUserEmail, 
         userPass, setUserPass, products, setProducts, searchedValue, setSearchedValue,
-        selectedProduct, setSelectedProduct}}>
+        selectedProduct, setSelectedProduct, cartOpen, setCartOpen}}>
             {props.children}
         </StoreContext.Provider>
     );

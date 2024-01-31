@@ -1,8 +1,6 @@
 import CartItemCont from "../../containers/CartItem/CartItemCont";
 
 const CartComponent = ({data}) => {
-
-    console.log(data)
     return(
         <>
             {data.map((product, i) => {
