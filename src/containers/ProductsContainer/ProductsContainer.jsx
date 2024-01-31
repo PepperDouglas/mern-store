@@ -1,20 +1,18 @@
-import React, { useEffect, useState, useContext, startTransition, useRef } from 'react';
+import React, { useEffect, useContext, useRef } from 'react';
 import axios from 'axios';
 import { StoreContext } from '../../contexts/ContextProvider';
 import ProductsComponent from '../../components/ProductsComponent/ProductsComponent';
 import SearchContainer from '../SearchContainer/SearchContainer';
 import DetailViewContainer from '../DetailView/DetailViewContainer';
+import CartContainer from '../../containers/CartContainer/CartContainer';
+import './ProductsContainer.css'
 
 const ProductsContainer = () => {
-    console.log('Rendering Products component');
-    //const [products, setProducts] = useState([]);
-    const { products, setProducts, searchedValue, selectedProduct } = useContext(StoreContext);
+    const { products, setProducts, searchedValue, cartOpen } = useContext(StoreContext);
     const firstMount = useRef(true);
   
     useEffect(() => {
-      // Fetch products from the Express server
-      axios.get('http://localhost:5000/products').then((response) => {
-        console.log('Received product response:', response.data); 
+      axios.get('http://localhost:5000/products').then((response) => { 
         setProducts(response.data);
       })
       .catch((error) => {
@@ -29,29 +27,25 @@ const ProductsContainer = () => {
            return;
         }
         
-        //make a filtered search
-        alert("trying search for " + searchedValue);
         axios.get(`http://localhost:5000/search?searchTerm=${searchedValue}`)
         .then((res) => setProducts(res.data))
         .catch((error) => {
             console.error('Error fetching products:', error);
         })
-
-        
     }, [searchedValue])
   
 
-    //context in container, rest is just showed down
     return (
-        <>
-            <div>
+        <div className='main-view'>
+            <div className='search-products-view'>
                 <SearchContainer></SearchContainer>
                 <ProductsComponent data={products}></ProductsComponent>
             </div>
-            <div>
-                <DetailViewContainer></DetailViewContainer>
+            <div className='product-detail-view'>
+              {cartOpen ? <DetailViewContainer></DetailViewContainer> : <CartContainer></CartContainer>}
+                
             </div>
-        </>
+        </div>
     );
   };
   

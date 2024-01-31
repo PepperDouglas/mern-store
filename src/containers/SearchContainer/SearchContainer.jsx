@@ -6,12 +6,11 @@ import SearchComponent from '../../components/SearchComponent/SearchComponent';
 const SearchContainer = () => {
 
     const [inputValue, setInputValue] = useState('');
-    const { searchedValue, setSearchedValue } = useContext(StoreContext);
+    const { setSearchedValue } = useContext(StoreContext);
 
     const handleChange = (e) => {
         const { value } = e.target;
         setInputValue(value);
-        //alert(searchValue);
     }
 
     const updateSearchedValue = () => {

@@ -7,7 +7,7 @@ import RegistrerComponent from "../../components/RegistrerComponent/RegistrerCom
 const RegistrerContainer = () => {
 
 
-    const { userEmail, userPass, setUserEmail, setUserPass } = useContext(StoreContext)
+    const { userEmail, userPass } = useContext(StoreContext)
 
     const handleRegistrer = () => {
         console.log("Registrer start");
@@ -19,15 +19,11 @@ const RegistrerContainer = () => {
                 .then((res) => {
                     console.log("New user made with res: " + res);
                 })
-
-
             }    
-        
         })
         .catch((error) => {
             console.error('Error fetching customer:', error);
         });
-
     }
 
     return(

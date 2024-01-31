@@ -1,16 +1,14 @@
 import axios from 'axios';
-import { useContext, useEffect, useState, useRef } from 'react'
-import { StoreContext } from '../../contexts/ContextProvider';
+import { useEffect, useState, useRef } from 'react'
 import CartComponent from '../../components/CartComponent/CartComponent';
+import './CartContainer.css'
 
 const CartContainer = () => {
 
-    const { loggedCustomer, setLoggedCustomer } = useContext(StoreContext);
     const [displayItems, setDisplayItems] = useState([]);
     const buyMessage = useRef('');
 
     useEffect(() => {
-        //get localstorage
         const data = sessionStorage.getItem("topstylecart");
         if (data == null) {
             return;
@@ -20,30 +18,25 @@ const CartContainer = () => {
     }, []);
 
     const handlePurchase = () => {
-        //check if valid amount (first by internal data, then by fetch)
-        //---if we have time!
-
-        //Now just get logged user
-
-        //If none, set message
         const loggedUser = sessionStorage.getItem("loggedUser");
         if (!loggedUser) {
             buyMessage.current.textContent = 'No user logged in';
             return;
         }
         buyMessage.current.textContent = 'Please wait...';
-        //See the amounts
+
         let exceededAmounts = false;
         for (var item of displayItems){
             if (item[1] > item[0].stock){
                 exceededAmounts = true;
             }
         }
+
         if (exceededAmounts){
             buyMessage.current.textContent = 'Too few items in stock';
             return;
         }
-        //create the data we want to put, to be able to send it as a new order:
+
         let newOrder = [];
         let itemsToReduceStock = [];
         for (var item of displayItems){
@@ -63,15 +56,15 @@ const CartContainer = () => {
                 }
             )
         }
-        //call on func to update customer with items (send customer _id or something)
         updateCustomerDbCart(newOrder);
 
-        //call on func to remove stock for each item (send array with id's or something)
         updateItemDbStock(itemsToReduceStock);
+
+        sessionStorage.removeItem("topstylecart");
+        setDisplayItems([]);
     }
 
     const updateItemDbStock = (newstock) => {
-        console.log("client enter stock");
         try {
             axios.patch(`http://localhost:5000/updatestock`, {
                 newstock: newstock
@@ -81,13 +74,10 @@ const CartContainer = () => {
         } catch (error){
             console.error('Error updating stock');
         }
-
-
     }
 
     const updateCustomerDbCart = (newOrder) => {
         const userId = sessionStorage.getItem("loggedUser")
-        //console.log(sessionStorage.getItem("loggedUser"));
         try {
             axios.patch(`http://localhost:5000/updatecart?customer=${userId}`, {
                 newOrder: newOrder
@@ -97,21 +87,18 @@ const CartContainer = () => {
             .catch((error) => {
                 console.error('Error updating cart:', error);
             })
-
-
         } catch (error){
             console.error('Error patching order');
         }
-
-
     }
 
     return(
-        <>
+        <div className='cart-unit'>
             <CartComponent data={displayItems}></CartComponent>
-            <button onClick={() => handlePurchase()}>Make Purchase</button>
+            <p>{displayItems.length === 0 ? "No items in cart!" : ""}</p>
+            <button style={{display: displayItems.length !== 0 ? "block" : "none"}} onClick={() => handlePurchase()}>Make Purchase</button>
             <p ref={buyMessage}></p>
-        </>
+        </div>
     );
 }
 

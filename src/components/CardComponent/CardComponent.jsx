@@ -1,13 +1,15 @@
 import './CardComponent.css';
 
-const CardComponent = ({props, setSelected, id}) => {
+const CardComponent = ({props, setSelected, onclick}) => {
 
-    //setSelected should be from _id or something, not title!
     return(
-        <div className="cardcomp" onClick={() => setSelected(props.title)}>
+        <div className="cardcomp" onClick={() => {
+            onclick(true);
+            setSelected(props.title);
+            }}>
             <img className="cardimg" src={props.image}></img>
             <h3>{props.title}</h3>
-            <p>{props.price}</p>
+            <p>${props.price}</p>
         </div>
     );
 }

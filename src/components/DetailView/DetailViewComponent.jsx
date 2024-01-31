@@ -2,7 +2,6 @@ import './DetailViewComponent.css';
 
 const DetailViewComponent = ({product, handleCartAdd}) => {
 
-    //here, also, we should add on _id, not title
     return(
         <div className='product-details'>
             <img src={product.image}></img>

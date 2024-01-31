@@ -1,0 +1,9 @@
+.customer-controls {
+    display: flex;
+    flex-direction: column-reverse;
+    flex-wrap: nowrap;
+    align-content: center;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 10%;
+}

@@ -6,18 +6,17 @@ import LoginComponent from "../../components/LoginComponent/LoginComponent";
 
 const LoginContainer = () => {
 
-    const { userEmail, userPass, setUserEmail, setUserPass, updateLoggedIn } = useContext(StoreContext)
+    const { userEmail, userPass, setUserEmail, setUserPass } = useContext(StoreContext)
 
 
     const handleLoginClick = () => {
-        //alert("Email: " + userEmail);
-        //alert("Password: " + userPass);
         axios.get(`http://localhost:5000/login?email=${userEmail}`)
         .then((response) => {
         console.log('Received customer response:', response.data);
         if(userPass === response.data.password){
             sessionStorage.setItem("loggedUser", response.data._id);
-            //updateLoggedIn(response.data._id);
+            setUserEmail("");
+            setUserPass("");
         }
         })
         .catch((error) => {
@@ -28,7 +27,6 @@ const LoginContainer = () => {
     return(
         <>
             <LoginComponent handleClick={handleLoginClick}></LoginComponent>
-            
         </>
     )
 }

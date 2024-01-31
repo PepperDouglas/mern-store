@@ -4,15 +4,13 @@ import CardComponent from "../../components/CardComponent/CardComponent";
 
 
 
-const CardContainer = ({prop, key}) => {
+const CardContainer = ({prop}) => {
 
-    //Card logic
-    const { setSelectedProduct } = useContext(StoreContext);
+    const { setSelectedProduct, setCartOpen } = useContext(StoreContext);
 
-    console.log("hello" + prop.title);
     return(
         
-        <CardComponent id={key} props={prop} setSelected={setSelectedProduct}></CardComponent>
+        <CardComponent props={prop} onclick={setCartOpen} setSelected={setSelectedProduct}></CardComponent>
         
     );
 }

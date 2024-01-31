@@ -5,13 +5,11 @@ import CustomerComponent from "../../components/CustomerComponent/CustomerCompon
 import LoginContainer from '../LoginContainer/LoginContainer';
 import LogoutContainer from '../LogoutContainer/LogoutContainer';
 import RegistrerContainer from '../RegistrerContainer/RegistrerContainer';
+import './CustomerContainer.css';
 
-//It sets the session storage
 const CustomerContainer = () => {
-    //Here is some context accessors
 
-
-    const { userEmail, userPass, setUserEmail, setUserPass } = useContext(StoreContext)
+    const { userEmail, userPass, setUserEmail, setUserPass, setCartOpen } = useContext(StoreContext)
 
     const updateEmail = (e) => {
         const { value } = e.target;
@@ -23,14 +21,21 @@ const CustomerContainer = () => {
         setUserPass(value);
     }
 
+    const openCart = () => {
+        setCartOpen(false);
+    }
+
 
     return(
-        <>
-            <CustomerComponent testdata={"I am the component"} changeMFn={updateEmail} changePFn={updatePass} mail={userEmail} pass={userPass}></CustomerComponent>
-            <LoginContainer></LoginContainer>
-            <RegistrerContainer></RegistrerContainer>
-            <LogoutContainer></LogoutContainer>
-        </>
+        <div className='customer-controls'>
+            <CustomerComponent changeMFn={updateEmail} changePFn={updatePass} mail={userEmail} pass={userPass}></CustomerComponent>
+            <div>
+                <LoginContainer></LoginContainer>
+                <RegistrerContainer></RegistrerContainer>
+                <LogoutContainer></LogoutContainer>
+                <button onClick={openCart}>CART</button>
+            </div>
+        </div>
     )
 
 }
